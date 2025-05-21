@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   Center,
-  Checkbox,
   Container,
   Field,
   Flex,
@@ -10,11 +9,27 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { Link as RouterLink } from "react-router";
+import { toast, ToastContainer } from "react-toastify";
 
 function Login() {
+
+  useEffect(() => {
+    const registerStatus = localStorage.getItem("register");
+    if (registerStatus === "success") {
+      toast.success("สมัครสมาชิกสำเร็จ", {
+        position: "top-center",
+        autoClose: 1500,
+        theme: "colored",
+      });
+      localStorage.removeItem("register");
+    }
+  }, []);
+
   return (
     <>
+      <ToastContainer />
       <Container maxW={"100vw"} height={"100vh"} p={0}>
         <Flex
           align="center"
