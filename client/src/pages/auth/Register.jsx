@@ -9,11 +9,41 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { Link as RouterLink } from "react-router";
+ import { ToastContainer, toast } from 'react-toastify';
 
 function Register() {
+
+    const [username,setUsername] = useState('')
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+    const [confirmPassword,setConfirmPassword] = useState('')
+
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        if(username === '' || email === '' || password === '' || confirmPassword === ''){
+                toast.error('กรุณากรอกข้อมูลให้ครบ', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    theme: "light",
+                });
+        }else{
+            if(password === confirmPassword){
+                
+            }else{
+                toast.error('รหัสผ่านไม่ตรงกัน', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    theme: "light",
+                });
+            }
+        }
+    }
+
   return (
     <>
+    <ToastContainer />
       <Container maxW={"100vw"} height={"100vh"} p={0}>
         <Flex
           align="center"
@@ -35,26 +65,26 @@ function Register() {
               <Stack gap="4" w="full">
                 <Field.Root>
                   <Field.Label>ชื่อผู้ใช้</Field.Label>
-                  <Input />
+                  <Input onChange={(e)=>setUsername(e.target.value)} autoComplete="false" />
                 </Field.Root>
                 <Field.Root>
                   <Field.Label>อีเมล</Field.Label>
-                  <Input type="email" />
+                  <Input type="email" onChange={(e)=>setEmail(e.target.value)} autoComplete="false" />
                 </Field.Root>
                 <Field.Root>
                   <Field.Label>รหัสผ่าน</Field.Label>
-                  <Input type="password" />
+                  <Input type="password" onChange={(e)=>setPassword(e.target.value)} />
                 </Field.Root>
                 <Field.Root>
                   <Field.Label>ยืนยันรหัสผ่าน</Field.Label>
-                  <Input type="password" />
+                  <Input type="password" onChange={(e)=>setConfirmPassword(e.target.value)} />
                 </Field.Root>
               </Stack>
             </Card.Body>
             {/* <Card.Footer justifyContent="flex-end"> */}
             <Card.Footer>
               <Flex direction={"column"} gap={2} w={"full"} align="stretch">
-                <Button colorPalette={"blue"}>สมัครสมาชิก</Button>
+                <Button colorPalette={"blue"} onClick={handleSubmit}>สมัครสมาชิก</Button>
                 <Button as={RouterLink} to="/login" variant="outline">เข้าสู่ระบบ</Button>
               </Flex>
             </Card.Footer>
